@@ -6,21 +6,59 @@
 /*   By: arokhsi <arokhsi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 10:43:00 by arokhsi           #+#    #+#             */
-/*   Updated: 2024/12/17 16:21:59 by arokhsi          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:05:15 by arokhsi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_update_data()
+static char	*ft_read(int fd)
 {
-	
+	char	*tmp;
+	char	*buffer;
+	int		b_read;
+
+	buffer = ft_empty_string(NULL);
+	tmp = malloc(BUFFER_SIZE + 1);
+	if (!tmp)
+		return (NULL);
+	tmp[BUFFER_SIZE] = '\0';
+	b_read = read(fd, tmp, BUFFER_SIZE);
+	while (b_read >= 0)
+	{
+		buffer = strljoin(buffer, tmp, b_read);
+		if (n_l_check(tmp))
+			break ;
+		b_read = read(fd, tmp, BUFFER_SIZE);
+	}
+	free(tmp);
+	if (b_read <= 0 && !buffer)
+		return (NULL);
+	return (buffer);
+}
+
+static char	*ft_update_data(char *data)
+{
+	int		i;
+	int		data_len;
+	char	*new_data;
+
+	if (!data)
+		return (NULL);
+	data_len = ft_strlen(data);
+	i = 0;
+	while (data[i] != '\n' && data[i] != '\0')
+		i++;
+	if (data_len == i)
+		return (free(data), NULL);
+	new_data = ft_strdup(data + i + 1);
+	free(data);
+	return (new_data);
 }
 
 static char	*ft_get_line(char *data)
 {
-	int	i;
-	int j;
+	int		i;
 	char	*buffer;
 
 	if (!data || *data == '\0')
@@ -31,15 +69,14 @@ static char	*ft_get_line(char *data)
 	buffer = malloc(i + 2);
 	if (!buffer)
 		return (NULL);
-	j = 0;
-	while (j < i)
+	i = 0;
+	while (data[i] != '\0' && data[i] != '\n')
 	{
-		buffer[j] = data[j];
-		j++;
+		buffer[i] = data[i];
+		i++;
 	}
-	if (data[i] == '\n')
-		buffer[j++] = '\n';
-	buffer[j] = '\0';
+	buffer[i] = data[i];
+	buffer[++j] = '\0';
 	return (buffer);
 }
 

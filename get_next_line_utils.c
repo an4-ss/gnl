@@ -6,36 +6,11 @@
 /*   By: arokhsi <arokhsi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 12:16:59 by arokhsi           #+#    #+#             */
-/*   Updated: 2024/12/17 16:21:59 by arokhsi          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:08:56 by arokhsi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_read(int fd)
-{
-	char	*tmp;
-	char	*buffer;
-	int		b_read;
-
-	buffer = ft_empty_string(NULL);
-	tmp = malloc[BUFFER_SIZE + 1];
-	if (!tmp)
-		return (NULL);
-	tmp[BUFFER_SIZE] = '\0';
-	b_read = read(fd, tmp, BUFFER_SIZE);
-	while (b_read > 0)
-	{
-		buffer = strljoin(buffer, tmp, b_read);
-		if (n_l_check(tmp))
-			break;
-		b_read = read(fd, tmp, BUFFER_SIZE);
-	}
-	free(tmp)
-	if (read_byte <= 0 && !buffer)
-		return (NULL);
-	return (buffer);
-}
 
 char	*ft_empty_string(char *data)
 {
@@ -49,19 +24,30 @@ char	*ft_empty_string(char *data)
 	buffer[0] = '\0';
 	return (buffer);
 }
+
 char	*ft_strljoin(char *s1, char *s2, int size)
 {
-	char	*buffer;
+	int		i;
+	int		j;
 	int		len;
+	char	*buffer;
 
-	len = ft_strlen(s1);
-	buffer = malloc(len + size + 1);
+	len = ft_strlen(s1) + size;
+	buffer = malloc(len + 1);
 	if (!buffer || !s2)
 		return (NULL);
 	if (!s1)
 		s1 = ft_init(NULL);
-	ft_strlcat("", s1, len);
-	ft_strlcat(buffer, s2, size);
+	i = -1;
+	while (s1[++i] != '\0')
+		buffer[i] = s1[i];
+	j = 0;
+	while (s2[j] != '\0' && j < size)
+	{
+		buffer[i + j] = s2[j];
+		j++;
+	}
+	buffer[i + j] = '\0';
 	free(s1);
 	return (buffer);
 }
@@ -90,6 +76,7 @@ int	n_l_check(char	*data)
 	}
 	return (0);
 }
+
 char	*ft_strdup(char *str)
 {
 	char	*buffer;
@@ -108,21 +95,4 @@ char	*ft_strdup(char *str)
 	}
 	buffer[i] = '\0';
 	return (buffer);
-}
-char	*ft_strlcat(char *dest, const char *src, size_t size)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (dest[i] != '\0')
-		i++;
-	j = 0;
-	while (src[j] != '\0' && j < size)
-	{
-		dest[i + j] = src[j];
-		j++;
-	}
-	dest[i + j] = '\0';
-	return (dest);
 }

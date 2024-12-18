@@ -6,7 +6,7 @@
 /*   By: arokhsi <arokhsi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 10:45:17 by arokhsi           #+#    #+#             */
-/*   Updated: 2024/12/15 12:16:42 by arokhsi          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:09:05 by arokhsi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
-char	*extract_line(char *buffer, int b_read);
+char	*ft_empty_string(char *data);
+char	*ft_strljoin(char *s1, char *s2, int size);
+int		ft_strlen(char *str);
+int		n_l_check(char	*data);
+char	*ft_strdup(char *str);
 
 #endif
