@@ -6,7 +6,7 @@
 /*   By: arokhsi <arokhsi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 12:16:59 by arokhsi           #+#    #+#             */
-/*   Updated: 2024/12/18 12:08:56 by arokhsi          ###   ########.fr       */
+/*   Updated: 2024/12/19 11:59:20 by arokhsi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strljoin(char *s1, char *s2, int size)
 	if (!buffer || !s2)
 		return (NULL);
 	if (!s1)
-		s1 = ft_init(NULL);
+		s1 = ft_empty_string(NULL);
 	i = -1;
 	while (s1[++i] != '\0')
 		buffer[i] = s1[i];
@@ -81,14 +81,16 @@ char	*ft_strdup(char *str)
 {
 	char	*buffer;
 	int		i;
+	int		len;
 
+	len = ft_strlen(str);
 	if (!str)
 		return (NULL);
-	buffer = malloc(ft_strlen(str) + 1);
+	buffer = malloc(len + 1);
 	if (!buffer)
 		return (NULL);
 	i = 0;
-	while (i < ft_strlen)
+	while (i < len)
 	{
 		buffer[i] = str[i];
 		i++;

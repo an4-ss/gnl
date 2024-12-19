@@ -6,7 +6,7 @@
 /*   By: arokhsi <arokhsi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 10:43:00 by arokhsi           #+#    #+#             */
-/*   Updated: 2024/12/18 12:05:15 by arokhsi          ###   ########.fr       */
+/*   Updated: 2024/12/19 12:04:06 by arokhsi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static char	*ft_read(int fd)
 		return (NULL);
 	tmp[BUFFER_SIZE] = '\0';
 	b_read = read(fd, tmp, BUFFER_SIZE);
-	while (b_read >= 0)
+	while (b_read > 0)
 	{
-		buffer = strljoin(buffer, tmp, b_read);
+		buffer = ft_strljoin(buffer, tmp, b_read);
 		if (n_l_check(tmp))
 			break ;
 		b_read = read(fd, tmp, BUFFER_SIZE);
@@ -76,7 +76,7 @@ static char	*ft_get_line(char *data)
 		i++;
 	}
 	buffer[i] = data[i];
-	buffer[++j] = '\0';
+	buffer[++i] = '\0';
 	return (buffer);
 }
 
@@ -85,12 +85,10 @@ static char	*ft_get_data(int fd, char *pre_data)
 	char	*buffer;
 	char	*data;
 
-	if (!pre_data)
-		return (ft_empty_string(pre_data));
 	if (n_l_check(pre_data))
 		return (pre_data);
 	buffer = ft_read(fd);
-	data = strljoin(pre_data, buffer, ft_strlen(buffer));
+	data = ft_strljoin(pre_data, buffer, ft_strlen(buffer));
 	free(buffer);
 	return (data);
 }
